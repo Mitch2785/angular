@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 import { Hero } from './hero';
-import { OnInit } from '@angular/core';
-
-
 import { HeroService } from './hero.service';
 
 @Component({
@@ -73,22 +71,21 @@ import { HeroService } from './hero.service';
 })
 export class AppComponent {
 	title = 'Tour of Heroes';
-	constructor(private heroService: HeroService) { }
 	heroes: Hero[];
 	selectedHero: Hero;
-	/* hero: Hero = {
-		id: 1,
-		name: 'Wiandstorm'
-	}; */ 
-	onSelect(hero: Hero): void {
-		this.selectedHero = hero;
-	}
+	
+	constructor(private heroService: HeroService) { }
 	
 	getHeroes(): void {
-		this.heroes = this.heroService.getHeroes();
+		this.heroService.getHeroes().then(heroes => this.heroes = heroes);
 	}
+	
 	ngOnInit(): void {
 		this.getHeroes();
+	}
+	
+	onSelect(hero: Hero): void {
+		this.selectedHero = hero;
 	}
 }
 
